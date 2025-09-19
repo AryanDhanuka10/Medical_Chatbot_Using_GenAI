@@ -8,6 +8,7 @@ Clone the repository
 
 ```bash
 git clone https://github.com/AryanDhanuka10/Medical_Chatbot_Using_GenAI
+```
 ### STEP 01- Create a conda environment after opening the repository
 
 ```bash
