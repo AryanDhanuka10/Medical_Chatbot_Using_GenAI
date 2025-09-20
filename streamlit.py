@@ -14,9 +14,10 @@ from src.prompt import system_prompt
 load_dotenv()
 PINECONE_API_KEY = st.secrets.get("PINECONE_API_KEY")
 GROQ_API_KEY = st.secrets.get("GROQ_API_KEY")
-
-os.environ["PINECONE_API_KEY"] = PINECONE_API_KEY
-os.environ["GROQ_API_KEY"] = GROQ_API_KEY
+if not PINECONE_API_KEY or not GROQ_API_KEY:
+    raise ValueError("❌ API keys are missing! Please set them in Streamlit secrets.")
+# os.environ["PINECONE_API_KEY"] = PINECONE_API_KEY
+# os.environ["GROQ_API_KEY"] = GROQ_API_KEY
 
 # Load embeddings
 embeddings = download_embeddings()
@@ -32,7 +33,7 @@ docsearch = PineconeVectorStore.from_existing_index(
 retriever = docsearch.as_retriever(search_type="similarity", search_kwargs={"k": 3})
 
 # Setup LLM
-chatModel = ChatGroq(model="llama-3.3-70b-versatile")
+chatModel = ChatGroq(model="llama-3.3-70b-versatile", api_key=GROQ_API_KEY)
 
 # Setup prompt
 prompt = ChatPromptTemplate.from_messages(
