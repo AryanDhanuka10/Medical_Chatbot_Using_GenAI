@@ -12,12 +12,11 @@ from src.prompt import system_prompt
 
 # Load environment variables
 load_dotenv()
-PINECONE_API_KEY = st.secrets.get("PINECONE_API_KEY")
-GROQ_API_KEY = st.secrets.get("GROQ_API_KEY")
-if not PINECONE_API_KEY or not GROQ_API_KEY:
-    raise ValueError("❌ API keys are missing! Please set them in Streamlit secrets.")
-# os.environ["PINECONE_API_KEY"] = PINECONE_API_KEY
-# os.environ["GROQ_API_KEY"] = GROQ_API_KEY
+PINECONE_API_KEY = os.environ.get("PINECONE_API_KEY")
+GROQ_API_KEY = os.environ.get("GROQ_API_KEY")
+
+os.environ["PINECONE_API_KEY"] = PINECONE_API_KEY
+os.environ["GROQ_API_KEY"] = GROQ_API_KEY
 
 # Load embeddings
 embeddings = download_embeddings()
